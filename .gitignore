@@ -8,6 +8,9 @@
 *.so
 *.dylib
 
+# the built CLI binary (no extension on macOS/Linux)
+/unigo
+
 # Test binary, built with `go test -c`
 *.test
 
