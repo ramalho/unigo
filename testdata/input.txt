@@ -1,5 +1,6 @@
 apple
 banana
+banana
 apple
 cherry
 banana
