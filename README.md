@@ -54,11 +54,14 @@ if len(seen) > before {  #3: conditionally...
 ```
 
 In Go, `len` is not a function; it works more like a C macro:
-the compiler generates inline the necessary code to get the
-length of the value; no call stack to deal with. 
+the compiler generates inline machine code to get the
+length of the value, avoiding the cost of a function call. 
 Therefore, applying `len` is very cheap.
 
-The logic above does two `len` and one key lookup into the map.
+The logic above uses `len` twice, and does one key lookup to write
+into the map[^1].
+
+[^1]: Whats the cost of cache invalidation? Something to research.
 
 In contrast, the usual way to use a map would be this:
 
