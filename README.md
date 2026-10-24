@@ -23,7 +23,7 @@ The trade-off is memory:
 memory, while `uniq` only needs to keep the
 previous line.
 
-> Note: `unigo` uses which `bufio.Scanner` caps line length at 64 KiB by default.
+> Note: `unigo` uses `bufio.Scanner` which caps line length at 64 KiB by default.
 > See [How to read a text file line-by-line in Go when some lines are long enough to cause "bufio.Scanner: token too long" errors?](https://stackoverflow.com/questions/21124327/how-to-read-a-text-file-line-by-line-in-go-when-some-lines-are-long-enough-to-ca)
 
 
@@ -60,18 +60,18 @@ Therefore, applying `len` is very cheap.
 
 The logic above does two `len` and one key lookup into the map.
 
-In contrast, the usual way of using a map would be this:
+In contrast, the usual way to use a map would be this:
 
 ```go
-if _, dup := seen[line]; !dup {
+if _, found := seen[line]; !found {
 	seen[line] = struct{}{}
 	fmt.Fprintln(buf, line)
 }
 ```
 
-Here there are two lookups.
+Here there are two lookups when the line is unique (never seen before).
 Primitive benchmarks have shown that the solution with `len` is
-a tiny bit faster when the vast majority of lines are unique.
+slightly faster when most lines are unique and duplicates are rare.
 
 
 ## Building and testing
